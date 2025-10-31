@@ -1,0 +1,11 @@
+---
+# tasks file for webserver
+  tasks:
+    - name: Create users with loop
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        state: present
+        groups: "{{ item.groups | join(',') }}"
+        append: false
+      loop: "{{ users }}"
+      notify: Restart nginx

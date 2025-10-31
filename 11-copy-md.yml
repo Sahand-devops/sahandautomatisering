@@ -1,0 +1,30 @@
+---
+- name: "Copy all .md files to db hosts"
+  hosts: db
+  become: true
+
+  pre_tasks:
+    - name: Ensure 'deploy' user exists (with home)
+      ansible.builtin.user:
+        name: deploy
+        state: present
+        create_home: true
+
+  tasks:
+    - name: Display paths of all .md files in dir
+      ansible.builtin.debug:
+        msg: "{{ lookup('ansible.builtin.fileglob', 'files/*.md', wantlist=True) }}"
+
+    - name: Copy each file over that matches the given pattern
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "/home/deploy/"
+        owner: "deploy"
+        group: "deploy"
+        mode: '0600'
+      with_fileglob:
+        - "files/*.md"
+
+
+
+

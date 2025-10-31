@@ -1,0 +1,20 @@
+---
+- name: Add several users
+  hosts: web
+  become: true
+
+  vars:
+    users:
+      - { name: 'alovelace', groups: [wheel, video, audio] }
+      - { name: 'aturing', groups: [tape] }
+      - { name: 'edijkstra', groups: [tcpdump] }
+      - { name: 'ghopper', groups: [wheel, audio] }
+
+  tasks:
+    - name: Create users with loop
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        state: present
+        groups: "{{ item.groups | join(',') }}"
+        append: false
+      loop: "{{ users }}"

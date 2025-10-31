@@ -5,7 +5,7 @@
 
   tasks:
     - name: Ensure the nginx configuration is updated for example.internal
-      ansible.builtin.copy:
+      ansible.builtin.template:
         src: files/example.internal.conf
         dest: /etc/nginx/conf.d/example.internal.conf
         owner: root

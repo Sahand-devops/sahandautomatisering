@@ -1,0 +1,17 @@
+---
+- name: Configure the web server(s) according to specs
+  hosts: web
+  roles:
+    - webserver
+
+- name: Configure the database server(s) according to specs
+  hosts: db
+  roles:
+    - dbserver
+
+  pre_tasks:
+    - name: Ensure 'deploy' user exists (with home)
+      ansible.builtin.user:
+        name: deploy
+        state: present
+        create_home: true

@@ -1,0 +1,8 @@
+---
+# vars file for webserver
+  vars:
+    users:
+      - { name: 'alovelace', groups: [wheel, video, audio] }
+      - { name: 'aturing', groups: [tape] }
+      - { name: 'edijkstra', groups: [tcpdump] }
+      - { name: 'ghopper', groups: [wheel, audio] }
