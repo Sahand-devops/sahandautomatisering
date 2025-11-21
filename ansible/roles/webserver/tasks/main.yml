@@ -1,0 +1,20 @@
+---
+- name: Update systems
+  hosts: web
+  become: true
+  tasks:
+    - name: Ensure all packages are up to date
+      ansible.builtin.package:
+        name: '*'
+        state: latest
+
+    - name: Install nginx webserver
+      ansible.builtin.package:
+        name: nginx
+        state: present
+
+    - name: Ensure nginx is started and enabled
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
